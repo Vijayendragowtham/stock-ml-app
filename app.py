@@ -1,7 +1,3 @@
-# ============================================================
-# 📊 End-to-End ML Regression App (Streamlit)
-# ============================================================
-
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -13,11 +9,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
 
-# ------------------------- PAGE SETUP -------------------------
 st.set_page_config(page_title="Stock Value Prediction", layout="wide")
 st.title("📊 Stock Value Prediction — Machine Learning App")
 
-# ------------------------- LOAD DATA --------------------------
 st.sidebar.header("1️⃣ Upload Your Dataset")
 uploaded = st.sidebar.file_uploader("Upload CSV file", type=["csv"])
 
@@ -51,8 +45,6 @@ num_cols = df.select_dtypes(include=np.number).columns.tolist()
 df[num_cols] = scaler.fit_transform(df[num_cols])
 
 st.success("✅ Data cleaned, encoded, and scaled successfully!")
-
-# ------------------------- EDA -------------------------------
 st.header("3️⃣ Exploratory Data Analysis (EDA)")
 if st.checkbox("Show Correlation Heatmap"):
     fig, ax = plt.subplots(figsize=(8,6))
@@ -63,7 +55,6 @@ if st.checkbox("Show Pairplot (first 4 numeric columns)"):
     sns.pairplot(df[num_cols[:4]])
     st.pyplot(plt.gcf())
 
-# ------------------------- MODEL BUILDING --------------------
 st.header("4️⃣ Model Building & Evaluation")
 
 target_col = st.selectbox("Select Target Column (Y)", df.columns)
@@ -100,7 +91,7 @@ ax.set_ylabel("Predicted Values")
 ax.set_title("Actual vs Predicted")
 st.pyplot(fig)
 
-# Save model
+
 joblib.dump(model, "trained_model.joblib")
 
 # ------------------------- RESULT & CONCLUSION ---------------
@@ -126,3 +117,4 @@ st.download_button("📦 Download Trained Model", open("trained_model.joblib", "
 
 st.markdown("---")
 st.info("👩‍💻 Created & deployed using Streamlit. Run locally with: `streamlit run app.py`")
+
