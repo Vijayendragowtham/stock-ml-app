@@ -91,10 +91,11 @@ model = RandomForestRegressor(n_estimators=200, random_state=42)
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
-# Evaluation metrics
-mae = mean_absolute_error(y_test, y_pred)
-rmse = mean_squared_error(y_test, y_pred, squared=False)
-r2 = r2_score(y_test, y_pred)
+# Evaluation metrics (version-safe)
+mae  = mean_absolute_error(y_test, y_pred)
+mse  = mean_squared_error(y_test, y_pred)
+rmse = np.sqrt(mse)    # safer than squared=False
+r2   = r2_score(y_test, y_pred)
 
 st.subheader("📈 Model Evaluation Metrics")
 st.write(f"**MAE:** {mae:.4f}")
